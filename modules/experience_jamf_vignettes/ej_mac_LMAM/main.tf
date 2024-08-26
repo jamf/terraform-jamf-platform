@@ -29,6 +29,33 @@ resource "jamfpro_category" "category_jamf_connect" {
   priority = 9
 }
 
+## Upload Packages (grab from repo project files, then upload to Jamf Pro) 
+
+## Define the dictionary of packages with their paths
+locals {
+  lmam_packages_dict = {
+    "JamfConnect_2.38.0"         = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnect_2.38.0.pkg"
+    "JamfConnectAssets_EJ_v2"    = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectAssets-EJ_v2_Ward-20240724.pkg"
+    "JamfConnectLaunchAgent"     = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectLaunchAgent.pkg"
+  }
+}
+
+resource "jamfpro_package" "lmam_packages" {
+  for_each              = local.lmam_packages_dict
+  package_name          = "${var.prefix}${each.key}"
+  info                  = ""
+  category_id           = jamfpro_category.category_jamf_connect.id
+  package_file_source   = each.value
+  os_install            = false
+  fill_user_template    = false
+  priority              = 10
+  reboot_required       = false
+  suppress_eula         = false
+  suppress_from_dock    = false
+  suppress_registration = false
+  suppress_updates      = false
+}
+
 ## Create scripts
 resource "jamfpro_script" "script_LMAM_vignette_first-run" {
   name            = "${var.prefix}LMAM_vignette_first-run"
@@ -37,10 +64,6 @@ resource "jamfpro_script" "script_LMAM_vignette_first-run" {
   category_id     = jamfpro_category.category_jamf_connect.id
   info            = "This script will places all components (LDs, scripts, etc) needed to run the vignette"
 }
-
-## Upload Packages (download from Github repo, then upload to Jamf Pro) 
-
-
 
 resource "jamfpro_script" "script_LMAM_vignette_clean_up" {
   name            = "${var.prefix}LMAM_vignette_clean_up"
@@ -81,21 +104,28 @@ resource "jamfpro_policy" "install_JC_and_assets" {
   category_id   = jamfpro_category.category_jamf_connect.id
 
   scope {
-    all_computers      = true
+    all_computers = true
   }
 
   self_service {
-    use_for_self_service            = false
+    use_for_self_service = false
   }
 
   payloads {
     packages {
       distribution_point = "default" // Set the appropriate distribution point
+      
       package {
-        id                          = jamfpro_package.browser_apps[each.key].id
-        action                      = "Install" // The action to perform with the package (e.g., Install, Cache, etc.)
-        fill_user_template          = false     // Whether to fill the user template
-        fill_existing_user_template = false     // Whether to fill existing user templates
+        id     = jamfpro_package.lmam_packages["JamfConnect_2.38.0"].id
+        action = "Install"
+      }
+      package {
+        id     = jamfpro_package.lmam_packages["JamfConnectAssets_EJ_v2"].id
+        action = "Install"
+      }
+      package {
+        id     = jamfpro_package.lmam_packages["JamfConnectLaunchAgent"].id
+        action = "Install"
       }
     }
   }
