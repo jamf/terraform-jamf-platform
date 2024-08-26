@@ -8,7 +8,7 @@ variable "jamfpro_instance_url" {
 variable "jamfpro_auth_method" {
   description = "Jamf Pro Auth Method."
   type        = string
-  default     = "oauth2" #basic or oauth2
+  default     = "basic" #basic or oauth2
 }
 
 variable "jamfpro_client_id" {
@@ -121,6 +121,11 @@ variable "include_ej_incident_response" {
 }
 
 variable "include_ej_mac_cis_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_ej_mac_LMAM" {
   type    = bool
   default = false
 }

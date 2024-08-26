@@ -111,6 +111,12 @@ module "ej_mac_cis_benchmark" {
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
 }
 
+module "ej_mac_LMAM" {
+  count                     = var.include_ej_mac_LMAM == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_mac_LMAM"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_LMAM/"
+}
+
 module "ej_mobile_cis_benchmark" {
   count  = var.include_ej_mobile_cis_benchmark == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_mobile_cis_benchmark"
