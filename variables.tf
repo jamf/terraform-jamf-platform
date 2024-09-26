@@ -8,7 +8,7 @@ variable "jamfpro_instance_url" {
 variable "jamfpro_auth_method" {
   description = "Jamf Pro Auth Method."
   type        = string
-  default     = "basic" #basic or oauth2
+  default     = "oauth2" #basic or oauth2
 }
 
 variable "jamfpro_client_id" {
