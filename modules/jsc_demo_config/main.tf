@@ -2,7 +2,7 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.9"
+      version = ">= 0.1.5"
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
