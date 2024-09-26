@@ -1,9 +1,10 @@
-name: "Terraform"
+name: "Terraform checks to main branch"
 
 on:
   push:
     branches: ["main"]
   pull_request:
+    branches: ["main"]
 
 permissions:
   contents: read
