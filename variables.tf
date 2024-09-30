@@ -231,3 +231,23 @@ variable "activation_profile_target" {
   type    = string
   default = ""
 }
+
+variable "include_google_chrome" {
+  type    = bool
+  default = false
+}
+
+variable "include_mozilla_firefox" {
+  type    = bool
+  default = false
+}
+
+variable "include_microsoft_teams" {
+  type    = bool
+  default = false
+}
+
+variable "include_slack" {
+  type    = bool
+  default = false
+}

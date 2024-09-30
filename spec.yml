@@ -1,0 +1,100 @@
+credentials:
+  - key: jamfpro_instance_url
+    type: <string>
+    presence: required
+    content: The URL of the Jamf Pro instance, must start with 'https://'.
+
+  - key: jamfpro_client_id
+    type: <string>
+    presence: required
+    content: The client ID for Jamf Pro API access.
+
+  - key: jamfpro_client_secret
+    type: <string>
+    presence: required
+    content: The client secret for Jamf Pro API access.
+
+  - key: jsc_username
+    type: <string>
+    presence: required
+    content: The username for Jamf Security Console authentication.
+
+  - key: jsc_password
+    type: <string>
+    presence: required
+    content: The password for Jamf Security Console authentication.
+
+options:
+  - key: include_ej_base
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the EJ base configuration.
+
+  - key: include_ej_jsc_config
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the EJ JSC configuration.
+
+### App Installer Flags
+  - key: include_google_chrome
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Google Chrome App Installer.  
+
+  - key: include_microsoft_teams
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Microsoft Teams App Installer.
+
+  - key: include_mozilla_firefox
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Mozilla Firefix App Installer.
+
+  - key: include_slack
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Slack App Installer.
+
+  ### onboarder options
+  - key: include_onboarder_wizard
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the onboarder wizard.
+    subkeys:
+      - key: install_chrome
+        type: <boolean>
+        presence: optional
+        content: Indicates whether to install Chrome.
+
+      - key: install_firefox
+        type: <boolean>
+        presence: optional
+        content: Indicates whether to install Firefox.
+
+      - key: block_beta_updates
+        type: <boolean>
+        presence: optional
+        content: Indicates whether to block beta updates.
+
+  ### other EJ flags
+
+  - key: include_ej_incident_response
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the EJ incident response.
+
+  - key: include_ej_mac_cis_benchmark
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the EJ Mac CIS benchmark.
+
+  - key: include_jamfpro_prerequisites
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include Jamf Pro prerequisites.
+
+  - key: include_jamfpro_demo_config
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include Jamf Pro demo configuration.

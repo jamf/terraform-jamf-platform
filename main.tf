@@ -56,8 +56,26 @@ module "jamf_protect_for_macOS" {
   jamfprotect_url             = var.jamfprotect_url
   jamfprotect_clientID        = var.jamfprotect_clientID
   jamfprotect_client_password = var.jamfprotect_client_password
+}
 
+module "google_chrome" {
+  count  = var.include_google_chrome == true ? 1 : 0
+  source = "./modules/app_installers/google_chrome/"
+}
 
+module "mozilla_firefox" {
+  count  = var.include_mozilla_firefox == true ? 1 : 0
+  source = "./modules/app_installers/mozilla_firefox/"
+}
+
+module "microsoft_teams" {
+  count  = var.include_microsoft_teams == true ? 1 : 0
+  source = "./modules/app_installers/microsoft_teams"
+}
+
+module "slack" {
+  count  = var.include_slack == true ? 1 : 0
+  source = "./modules/app_installers/slack"
 }
 
 ## Initialize Onboarding Wizard modules
