@@ -1,0 +1,32 @@
+jamfpro_instance_url  = "https://neatcherub.jamfcloud.com"
+jamfpro_client_id     = "aa321a60-d0b0-484b-a7b6-6097a3cda81d"
+jamfpro_client_secret = "DCbbMYDxoYFikP2ZWTpprwqmCmCVeaMTEeloe8P4AT259iOvYDc_JGY-eBauDgKH"
+jsc_username          = "nate.bucher.test@icloud.com"
+jsc_password          = "qezwi7-zibgop-Zygdor"
+include_ej_base       = true
+include_ej_jsc_config = false
+
+### onboarder options
+include_onboarder_wizard = false
+install_chrome           = true
+install_firefox          = false
+block_beta_updates       = false
+
+### other EJ flags
+include_ej_incident_response  = false
+include_ej_mac_cis_benchmark  = false
+include_jamfpro_prerequisites = false
+include_jamfpro_demo_config   = false
+
+### SaaS Tenancy
+include_ej_saas_tenancy = false
+VPCId                   = ""
+KeyName                 = ""
+SubnetId                = ""
+aws_region              = ""
+
+### Jamf Protect for macOS integration
+include_jamfprotectformacos_config = false
+jamfprotect_url                    = "https://<myserver>.protect.jamfcloud.com"
+jamfprotect_clientID               = ""
+jamfprotect_client_password        = ""

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>PayloadContent</key>
+				<dict>
+					<key>com.jamf.setupmanager</key>
+					<dict>
+						<key>Forced</key>
+						<array>
+							<dict>
+								<key>mcx_preference_settings</key>
+								<dict>
+									<key>enrollmentActions</key>
+									<array>
+										<dict>
+											<key>arguments</key>
+											<array/>
+											<key>icon</key>
+											<string>https://ics.services.jamfcloud.com/icon/hash_bb4e9c7d19adf8360ff28d666b01e66c35ae3e8d190660ac496d5a8abf4276a8</string>
+											<key>installomator</key>
+											<string>microsoftoffice365</string>
+											<key>label</key>
+											<string>Microsoft 365 Suite</string>
+										</dict>
+										<dict>
+											<key>arguments</key>
+											<array/>
+											<key>icon</key>
+											<string>https://ics.services.jamfcloud.com/icon/hash_87d2224fa990a47de96f63fb2f84aa3b7304c20a3ff29412f5a7a484745fd2c9</string>
+											<key>installomator</key>
+											<string>googlechromepkg</string>
+											<key>label</key>
+											<string>Google Chrome</string>
+										</dict>
+									</array>
+								</dict>
+							</dict>
+						</array>
+					</dict>
+				</dict>
+				<key>PayloadDisplayName</key>
+				<string>Custom Settings</string>
+				<key>PayloadIdentifier</key>
+				<string>CF6DE3CF-6546-4F6F-805F-D56F25AEB455</string>
+				<key>PayloadOrganization</key>
+				<string>JAMF Software</string>
+				<key>PayloadType</key>
+				<string>com.apple.ManagedClient.preferences</string>
+				<key>PayloadUUID</key>
+				<string>CF6DE3CF-6546-4F6F-805F-D56F25AEB455</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>PayloadDescription</key>
+		<string/>
+		<key>PayloadDisplayName</key>
+		<string>Jamf Setup Manager</string>
+		<key>PayloadEnabled</key>
+		<true/>
+		<key>PayloadIdentifier</key>
+		<string>E526203C-5B0C-40FD-97EC-7BEECF532656</string>
+		<key>PayloadOrganization</key>
+		<string>Kick The Tires</string>
+		<key>PayloadRemovalDisallowed</key>
+		<true/>
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>E526203C-5B0C-40FD-97EC-7BEECF532656</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+	</dict>
+</plist>

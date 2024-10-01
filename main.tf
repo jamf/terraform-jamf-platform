@@ -234,3 +234,14 @@ module "ej_jsc_config" {
   /* wizard_suffix         = var.wizard_suffix */
 }
 
+module "trial_baseline" {
+  count                     = var.include_trial_baseline == true ? 1 : 0
+  source                    = "./modules/trial_baseline"
+  support_files_path_prefix = "modules/trial_baseline/"
+}
+
+module "jc_basic" {
+  count                     = var.include_jc_basic == true ? 1 : 0
+  source                    = "./modules/jc_basic"
+  support_files_path_prefix = "modules/jc_basic/"
+}

@@ -36,7 +36,15 @@ variable "jamfpro_password" {
   sensitive   = true
   default     = ""
 }
+variable "include_trial_baseline" {
+  type    = bool
+  default = false
+}
 
+variable "include_jc_basic" {
+  type    = bool
+  default = false
+}
 
 ## Define JSC provider variables (populated by .tfvars file)
 variable "jsc_username" {
