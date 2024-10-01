@@ -102,21 +102,21 @@ include_jamfpro_demo_config     = false
 include_jamfpro_prerequisites   = false
 
 ## App Installer Knobs
-include_google_chrome   = true
-include_mozilla_firefox = true
-include_microsoft_teams = true
-include_slack           = true
-include_okta_verify     = true
-include_swift_dialog    = true
-include_dropbox         = true
-include_google_drive    = true
-include_jamf_composer   = true
-include_jamf_connect    = true
-include_pppc_utility    = true
-include_jamfcheck       = true
-include_nudge           = true
-include_utm             = true
-include_zoom            = true
+include_google_chrome   = false
+include_mozilla_firefox = false
+include_microsoft_teams = false
+include_slack           = false
+include_okta_verify     = false
+include_swift_dialog    = false
+include_dropbox         = false
+include_google_drive    = false
+include_jamf_composer   = false
+include_jamf_connect    = false
+include_pppc_utility    = false
+include_jamfcheck       = false
+include_nudge           = false
+include_utm             = false
+include_zoom            = false
 
 ## Jamf Protect Knobs
 include_jamf_protect_for_macOS  = false
