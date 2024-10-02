@@ -1,13 +1,14 @@
 /*
-This terraform blueprint will build the Local macOS Accoiunt Management (LMAM) vignette from Experience Jamf.
+This terraform blueprint will build the Local macOS Accoiunt Management (LMAM) vignette as exists in Experience Jamf.
+
 It will do the following:
- - Create 1 category
+ - Create 2 categories
  - Create 2 scripts
  - Upload 3 packages
  - Create 1 extension attribute
  - Create 1 smart computer groups
  - Create 3 policies
- - Create 2 configuration profiles
+ - Create/upload 2 configuration profiles
 
  Prerequisites:
   - the Dialog tool must be installed
@@ -27,6 +28,11 @@ terraform {
 resource "jamfpro_category" "category_jamf_connect" {
   name     = "${var.prefix}Jamf Connect"
   priority = 9
+}
+
+resource "jamfpro_category" "category_experience_jamf" {
+  name     = "${var.prefix}Experience Jamf"
+  priority = 1
 }
 
 ## Upload Packages (grab from repo project files, then upload to Jamf Pro) 
@@ -86,13 +92,17 @@ resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_LMAM-vignette-enabled" {
   name = "${var.prefix}LMAM Run (Vignette Enabled)"
+
   criteria {
     name        = jamfpro_computer_extension_attribute.ea_LMAM-marker.name
     search_type = "is"
     value       = "lmamRUN"
-    and_or      = "and"
     priority    = 0
   }
+
+  depends_on = [
+    jamfpro_computer_extension_attribute.ea_LMAM-marker
+  ]
 }
 
 ## Create policies
@@ -131,152 +141,108 @@ resource "jamfpro_policy" "install_JC_and_assets" {
   }
 }
 
-# resource "jamfpro_policy" "policy_cis_remove" {
-#   name          = "${var.prefix}CIS Level 1 - Remove (Sonoma)"
-#   enabled       = true
-#   trigger_other = "sonomacisremove"
-#   frequency     = "Ongoing"
-#   category_id   = jamfpro_category.category_cis_benchmarks.id
-#   depends_on    = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_profiles_present]
+## Create policy for Vignette.LMAM-FirstRun
+resource "jamfpro_policy" "Vignette_LMAM_FirstRun" {
+  name          = "${var.prefix}Vignette.LMAM-FirstRun"
+  enabled       = true
+  trigger_other = "@LMAM"
+  frequency     = "Ongoing"
+  category_id   = jamfpro_category.category_jamf_connect.id
 
-#   scope {
-#     all_computers      = false
-#     computer_group_ids = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_profiles_present.id]
-#   }
+  depends_on = [
+    jamfpro_category.category_jamf_connect
+  ]
 
-#   self_service {
-#     use_for_self_service            = true
-#     self_service_display_name       = "CIS Level 1 - Remove (Sonoma)"
-#     install_button_text             = "Remove"
-#     self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/sonoma_cis_lvl1_remove_self_service_desc.txt")
-#     force_users_to_view_description = false
-#     feature_on_main_page            = false
-#   }
+  scope {
+    all_computers = true
+  }
 
-#   payloads {
-#     scripts {
-#       id = jamfpro_script.script_cis_remove.id
-#     }
+  self_service {
+    use_for_self_service            = true
+    self_service_display_name       = "Local macOS Account Mgmt"
+    install_button_text             = "Run"
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/LMAM_self_service_desc.txt")
+    force_users_to_view_description = true
+    feature_on_main_page            = false
 
-#     reboot {
-#       file_vault_2_reboot            = false
-#       message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
-#       minutes_until_reboot           = 5
-#       no_user_logged_in              = "Do not restart"
-#       start_reboot_timer_immediately = false
-#       startup_disk                   = "Current Startup Disk"
-#       user_logged_in                 = "Do not restart"
-#     }
-#   }
-# }
+    self_service_category {
+      display_in = true
+      feature_in = false
+      id         = jamfpro_category.category_jamf_connect.id
+    }
+  }
 
-# resource "jamfpro_policy" "policy_sonoma_cis_lvl1_audit" {
-#   name          = "${var.prefix}CIS Level 1 - Audit (Sonoma)"
-#   enabled       = true
-#   trigger_other = "@CIS_audit"
-#   frequency     = "Ongoing"
-#   category_id   = jamfpro_category.category_cis_benchmarks.id
+  payloads {
+    scripts {
+      id = jamfpro_script.script_LMAM_vignette_first-run.id
+    }
+  }
+}
 
-#   scope {
-#     all_computers      = false
-#     computer_group_ids = []
-#   }
 
-#   self_service {
-#     use_for_self_service = false
-#   }
+resource "jamfpro_policy" "Vignette_LMAM_CleanUp" {
+  name          = "${var.prefix}Vignette.LMAM-CleanUp"
+  enabled       = true
+  trigger_other = "@LMAM-CLEANUP"
+  frequency     = "Ongoing"
+  category_id   = jamfpro_category.category_jamf_connect.id
 
-#   payloads {
-#     scripts {
-#       id         = jamfpro_script.script_sonoma_cis_lvl1_compliance.id
-#       parameter4 = "--check"
-#     }
+  scope {
+    all_computers      = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_LMAM-vignette-enabled.id]
+  }
 
-#     maintenance {
-#       recon = true
-#     }
+  depends_on = [
+    jamfpro_smart_computer_group.group_LMAM-vignette-enabled
+  ]
 
-#     reboot {
-#       file_vault_2_reboot            = false
-#       message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
-#       minutes_until_reboot           = 5
-#       no_user_logged_in              = "Do not restart"
-#       start_reboot_timer_immediately = false
-#       startup_disk                   = "Current Startup Disk"
-#       user_logged_in                 = "Do not restart"
-#     }
-#   }
-# }
+  payloads {
+    scripts {
+      id = jamfpro_script.script_LMAM_vignette_clean_up.id
+    }
+  }
+}
 
-# resource "jamfpro_policy" "policy_sonoma_cis_lvl1_remediation" {
-#   name            = "${var.prefix}CIS Level 1 - Remediation (Sonoma)"
-#   enabled         = true
-#   trigger_checkin = true
-#   frequency       = "Ongoing"
-#   category_id     = jamfpro_category.category_cis_benchmarks.id
+## Create Configuration Profiles
 
-#   scope {
-#     all_computers      = false
-#     computer_group_ids = []
-#   }
+resource "jamfpro_macos_configuration_profile_plist" "LMAM_IDP_config" {
+  name                = "${var.prefix}Local macOS Account Management | LMAM (JCL-JCMB-JCPE)"
+  description         = "NA"
+  level               = "System"
+  distribution_method = "Install Automatically"
+  category_id         = jamfpro_category.category_jamf_connect.id
+  redeploy_on_update  = "Newly Assigned"
+  payloads            = file("${var.support_files_path_prefix}support_files/computer_config_profiles/LMAM_IDP.mobileconfig")
+  payload_validate    = false
+  user_removable      = false
 
-#   self_service {
-#     use_for_self_service = false
-#   }
+  depends_on = [
+    jamfpro_smart_computer_group.group_LMAM-vignette-enabled
+  ]
 
-#   payloads {
-#     scripts {
-#       id         = jamfpro_script.script_sonoma_cis_lvl1_compliance.id
-#       parameter4 = "--check"
-#       parameter5 = "--fix"
-#       parameter6 = "--check"
-#     }
+  scope {
+    all_computers      = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_LMAM-vignette-enabled.id]
+  }
+}
 
-#     maintenance {
-#       recon = true
-#     }
+resource "jamfpro_macos_configuration_profile_plist" "Experience_Jamf_Custom_Variables_config" {
+  name                = "${var.prefix}Experience Jamf Custom Variables"
+  description         = "NA"
+  level               = "System"
+  distribution_method = "Install Automatically"
+  category_id         = jamfpro_category.category_experience_jamf.id
 
-#     reboot {
-#       file_vault_2_reboot            = false
-#       message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
-#       minutes_until_reboot           = 5
-#       no_user_logged_in              = "Do not restart"
-#       start_reboot_timer_immediately = false
-#       startup_disk                   = "Current Startup Disk"
-#       user_logged_in                 = "Do not restart"
-#     }
-#   }
-# }
+  depends_on = [
+    jamfpro_category.category_experience_jamf
+  ]
 
-# ## Define configuration profile details
-# locals {
-#   cis_lvl1_macos_14_dict = {
-#     "Application Access"    = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-applicationaccess.mobileconfig"
-#     "Login Window"          = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-loginwindow.mobileconfig"
-#     "Managed Client"        = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-timed.mobileconfig"
-#     "MCX"                   = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-mcx.mobileconfig"
-#     "Safari"                = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-safari.mobileconfig"
-#     "Screen Saver"          = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-screensaver.mobileconfig"
-#     "System Policy Control" = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-systempolicy.control.mobileconfig"
-#     "Terminal"              = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-terminal.mobileconfig"
-#   }
-# }
+  redeploy_on_update = "Newly Assigned"
+  payloads           = file("${var.support_files_path_prefix}support_files/computer_config_profiles/EJ_Custom_Variables.mobileconfig")
+  payload_validate   = false
+  user_removable     = false
 
-# ## Create configuration profiles
-# resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
-#   for_each            = local.cis_lvl1_macos_14_dict
-#   name                = "${var.prefix}Sonoma_cis_lvl1 - ${each.key}"
-#   distribution_method = "Install Automatically"
-#   /*redeploy_on_update  = "Newly Assigned"*/
-#   category_id = jamfpro_category.category_cis_benchmarks.id
-#   level       = "System"
-
-#   payloads = file("${each.value}")
-
-#   scope {
-#     all_computers      = false
-#     computer_group_ids = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply.id]
-#   }
-
-#   depends_on = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply]
-# }
+  scope {
+    all_computers = true
+  }
+}

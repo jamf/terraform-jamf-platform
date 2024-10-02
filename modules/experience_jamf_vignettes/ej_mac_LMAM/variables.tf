@@ -6,5 +6,5 @@ variable "prefix" {
 
 variable "support_files_path_prefix" {
   type    = string
-  default = ""
+  default = "/Users/matthew.ward/VisualStudio/EJ/ExperienceJamf-Terraform/modules/experience_jamf_vignettes/ej_mac_LMAM/"
 }

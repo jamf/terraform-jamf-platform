@@ -1,0 +1,12 @@
+### About This Experience
+Jamf Connect introduces a simple way to let a user do their day-to-day tasks as a standard user but still have the freedom to become an administrator on demand for the occasional task. Unlike other solutions on the market, Jamf Connect allows organizations to manage this right through their cloud Identity Provider (IdP), using the power of identity on macOS to manage privileges. Combined with other solutions like Jamf Protect, organizations can report unexpected malicious behavior and log elevation requests in their SIEM in case of a security event.
+
+### What to Expect
+- A new local account (Standard privilages) will be created using your Experience Jamf credentials
+- A new customized login experience will be displayed to login to the new account
+- You will be able to use the Jamf Connect Menu Bar item to elevate your privalages to Administrator
+- When completed a process will run to clean up the account and return you to the native macOS login window
+
+### Learn More
+[Introducing privilege elevation in Jamf Connect](https://www.jamf.com/blog/privilege-elevation-macos-security/)
+[Privilege Elevation for Local Accounts](https://learn.jamf.com/en-US/bundle/jamf-connect-documentation-current/page/Privilege_Elevation_Local_Accounts.html)

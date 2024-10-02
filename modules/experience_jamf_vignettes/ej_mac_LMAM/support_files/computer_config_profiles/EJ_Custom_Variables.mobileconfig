@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadUUID</key>
+	<string>8680126E-33CF-4460-A33A-402EBEE3CD17</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadOrganization</key>
+	<string>The Jamf Experience</string>
+	<key>PayloadIdentifier</key>
+	<string>8680126E-33CF-4460-A33A-402EBEE3CD17</string>
+	<key>PayloadDisplayName</key>
+	<string>Experience Jamf Custom Variables</string>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>A45B3AAC-C0C3-4CC2-B96B-13A4E4C01C8B</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>A45B3AAC-C0C3-4CC2-B96B-13A4E4C01C8B</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.tryjamf.device</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>JSSID</key>
+								<string>$JSSID</string>
+								<key>USERNAME</key>
+								<string>$USERNAME</string>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Managed Login Items</string>
+			<key>PayloadIdentifier</key>
+			<string>A6BA196B-DA01-4ED7-B33E-0F8C4467A425</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.servicemanagement</string>
+			<key>PayloadUUID</key>
+			<string>A6BA196B-DA01-4ED7-B33E-0F8C4467A425</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>Rules</key>
+			<array>
+				<dict>
+					<key>RuleType</key>
+					<string>BundleIdentifier</string>
+					<key>RuleValue</key>
+					<string>com.apple.zsh</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>68D230D3-C038-4B51-9C4B-9F02F8306660</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>68D230D3-C038-4B51-9C4B-9F02F8306660</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.apple.SetupAssistant.managed</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>SkipAppearance</key>
+								<true/>
+								<key>SkipCloudSetup</key>
+								<true/>
+								<key>SkipPrivacySetup</key>
+								<true/>
+								<key>SkipScreenTime</key>
+								<true/>
+								<key>SkipSiriSetup</key>
+								<true/>
+								<key>SkipTouchIDSetup</key>
+								<true/>
+								<key>SkipTrueTone</key>
+								<true/>
+								<key>SkipiCloudStorageSetup</key>
+								<true/>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

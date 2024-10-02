@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadUUID</key>
+	<string>C8C78D61-DC35-4A36-A813-4E6E8A78D184</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadOrganization</key>
+	<string>The Jamf Experience</string>
+	<key>PayloadIdentifier</key>
+	<string>C8C78D61-DC35-4A36-A813-4E6E8A78D184</string>
+	<key>PayloadDisplayName</key>
+	<string>Local macOS Account Management | LMAM (JCL-JCMB-JCPE)</string>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>0CF0F19D-9257-45C4-91AF-1271032F7637</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>0CF0F19D-9257-45C4-91AF-1271032F7637</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.jamf.connect</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>HiddenMenuItems</key>
+								<array>
+									<string>changepassword</string>
+									<string>preferences</string>
+									<string>resetpassword</string>
+								</array>
+								<key>Appearance</key>
+								<dict>
+									<key>ShowWelcomeWindow</key>
+									<false/>
+								</dict>
+								<key>IdPSettings</key>
+								<dict>
+									<key>Provider</key>
+									<string>Okta OIDC</string>
+									<key>ROPGID</key>
+									<string>0oadjndcm5flUuGgP1d7</string>
+									<key>TenantID</key>
+									<string>onjamf-admin.oktapreview.com</string>
+								</dict>
+								<key>Scripting</key>
+								<dict>
+									<key>OnAuthFailure</key>
+									<string>/Library/.tje/LMAM/JamfConnectAssets/login_failure.sh</string>
+									<key>OnAuthSuccess</key>
+									<string>/Library/.tje/LMAM/JamfConnectAssets/login_success.sh</string>
+								</dict>
+								<key>TemporaryUserPermissions</key>
+								<dict>
+									<key>TemporaryUserPromotion</key>
+									<true/>
+									<key>UserPromotionDuration</key>
+									<integer>2</integer>
+									<key>UserPromotionReason</key>
+									<true/>
+									<key>UserPromotionTimer</key>
+									<true/>
+									<key>VerifyUserPromotion</key>
+									<true/>
+									<key>UserPromotionChoices</key>
+									<array>
+										<string>Hardware Driver Install</string>
+										<string>XCode Software Development</string>
+										<string>General Mayhem</string>
+										<string>Install Application</string>
+									</array>
+								</dict>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>1BFBA564-CB7F-4EA8-A28C-D727F601B766</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>1BFBA564-CB7F-4EA8-A28C-D727F601B766</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.jamf.connect.login</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>AllowNetworkSelection</key>
+								<true/>
+								<key>AuthServer</key>
+								<string>onjamf-admin.oktapreview.com</string>
+								<key>CreateAdminUser</key>
+								<false/>
+								<key>CreateJamfConnectPassword</key>
+								<true/>
+								<key>CreateNewUserHide</key>
+								<true/>
+								<key>HelpURL</key>
+								<string>https://jamf.com/jamfconnect</string>
+								<key>LoginLogo</key>
+								<string>/Library/.tje/LMAM/JamfConnectAssets/Jamf-stacked-color.png</string>
+								<key>LoginWindowMessage</key>
+								<string>Please login with your @tryjamf.com credentials</string>
+								<key>OIDCIgnoreAdmin</key>
+								<true/>
+								<key>OIDCNewPassword</key>
+								<false/>
+								<key>OIDCProvider</key>
+								<string>Okta</string>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>B6D44FAA-8A17-47C5-B54C-410729AE709E</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>B6D44FAA-8A17-47C5-B54C-410729AE709E</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.jamf.connect.actions</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>MenuIcon</key>
+								<true/>
+								<key>Version</key>
+								<string>1</string>
+								<key>Actions</key>
+								<array>
+									<dict>
+										<key>Name</key>
+										<string>VignetteStep2</string>
+										<key>Title</key>
+										<dict>
+											<key>Command</key>
+											<string>path</string>
+											<key>CommandOptions</key>
+											<string>/bin/sh /Library/.tje/LMAM/LMAM_vignette-local-step2-run.sh</string>
+										</dict>
+									</dict>
+									<dict>
+										<key>Name</key>
+										<string>Ping Google</string>
+										<key>ToolTip</key>
+										<string>Pings google.com and returns a result of good or bad</string>
+										<key>Title</key>
+										<dict>
+											<key>Command</key>
+											<string>ping</string>
+											<key>CommandOptions</key>
+											<string>google.com</string>
+										</dict>
+									</dict>
+								</array>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
