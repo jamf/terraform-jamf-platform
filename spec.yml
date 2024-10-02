@@ -56,6 +56,61 @@ options:
     presence: optional
     content: Indicates whether to include the Slack App Installer.
 
+  - key: include_okta_verify
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Okta Verify App Installer.
+
+  - key: include_swift_dialog
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the swiftDialog App Installer.
+
+  - key: include_dropbox
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Dropbox App Installer.
+
+  - key: include_google_drive
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Google Drive App Installer.
+
+  - key: include_jamf_composer
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Jamf Composer App Installer.
+
+  - key: include_jamf_connect
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Jamf Connect App Installer.
+
+  - key: include_pppc_utility
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Jamf PPPC Utility App Installer.
+
+  - key: include_jamfcheck
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the JamfCheck App Installer.
+
+  - key: include_nudge
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Nudge App Installer.    
+
+  - key: include_utm
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the UTM App Installer.   
+
+  - key: include_zoom
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Zoom App Installer. 
+
   ### onboarder options
   - key: include_onboarder_wizard
     type: <boolean>

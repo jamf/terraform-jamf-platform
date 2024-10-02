@@ -1,0 +1,65 @@
+name: "Deploy staging branch to staging environment"
+
+on:
+  schedule:
+    - cron: "0 */12 * * *" # This runs every 12 hours
+  #push: staging should only be PR'd into
+  #  branches: ["staging"]
+  pull_request:
+    branches: ["staging"]
+
+concurrency:
+  group: stagingenvironment
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    environment: staging
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      # Runs Terraform using envionrment variables
+      - name: Terraform Apply
+        run: |
+          terraform apply -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
+                          -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
+                          -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
+                          -var "jsc_username=${{ secrets.jsc_username }}" \
+                          -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -var "include_ej_base=true" \
+                          -var "include_ej_jsc_config=true" \
+                          -auto-approve
+      # Destroys Terraform using envionrment variables
+      - name: Terraform Destroy
+        run: |
+          terraform destroy -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
+                          -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
+                          -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
+                          -var "jsc_username=${{ secrets.jsc_username }}" \
+                          -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -var "include_ej_base=true" \
+                          -var "include_ej_jsc_config=true" \
+                          -auto-approve

@@ -47,28 +47,30 @@ cd /Users/[FIRST.LAST]/ExperienceJamf-Terraform
 nano terraform.tfvars
 ```
 
-Copy and paste the following data then customize it with your own credentials
+Copy and paste the following data then customize it with your own credentials and set knobs to enable specific modules contained within this project. 
 
 ```
-jamfpro_instance_url  = "https://<myserver>.jamfcloud.com"
+## Jamf Pro Account Details
+jamfpro_instance_url  = ""
+jamfpro_auth_method   = "" ## oauth2 or basic
 jamfpro_client_id     = ""
 jamfpro_client_secret = ""
-jsc_username          = ""
-jsc_password          = ""
-include_ej_base       = false
-include_ej_jsc_config = false
+jamfpro_username      = ""
+jamfpro_password      = ""
 
-### onboarder options
-include_onboarder_wizard = false
-install_chrome           = false
-install_firefox          = false
-block_beta_updates       = false
+## Jamf Protect Account Details
+jamfprotect_url             = ""
+jamfprotect_clientID        = ""
+jamfprotect_client_password = ""
 
-### other EJ flags
-include_ej_incident_response  = false
-include_ej_mac_cis_benchmark  = false
-include_jamfpro_prerequisites = false
-include_jamfpro_demo_config   = false
+## Jamf Security Cloud (RADAR) Account Details
+jsc_username            = ""
+jsc_password            = ""
+jsc_provided_idp_client = ""
+tje_okta_clientid       = ""
+tje_okta_orgdomain      = ""
+block_page_logo         = ""
+## block_page_logo takes a Base 64 encoded string conversion of the image only
 
 ### SaaS Tenancy
 include_ej_saas_tenancy = false
@@ -77,11 +79,64 @@ KeyName                 = ""
 SubnetId                = ""
 aws_region              = ""
 
-### Jamf Protect for macOS integration
-include_jamfprotectformacos_config = false
-jamfprotect_url                    = "https://<myserver>.protect.jamfcloud.com"
-jamfprotect_clientID               = ""
-jamfprotect_client_password        = ""
+## Choose which Activation Profile option you want to output in your module
+activation_profile_target = "macosplist"
+
+# File path prefix for Terraform directory
+support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
+
+## Optional suffix
+wizard_suffix = ""
+
+## MODULE KNOBS
+## Experience Jamf Knobs
+include_ej_base                 = false
+include_ej_incident_response    = false
+include_ej_mac_cis_benchmark    = false
+include_ej_mobile_cis_benchmark = false
+include_ej_secure_remote_access = false
+include_ej_jsc_config           = false
+
+## Jamf Pro Knobs
+include_jamfpro_demo_config     = false
+include_jamfpro_prerequisites   = false
+
+## App Installer Knobs
+include_google_chrome   = true
+include_mozilla_firefox = true
+include_microsoft_teams = true
+include_slack           = true
+include_okta_verify     = true
+include_swift_dialog    = true
+include_dropbox         = true
+include_google_drive    = true
+include_jamf_composer   = true
+include_jamf_connect    = true
+include_pppc_utility    = true
+include_jamfcheck       = true
+include_nudge           = true
+include_utm             = true
+include_zoom            = true
+
+## Jamf Protect Knobs
+include_jamf_protect_for_macOS  = false
+
+## Jamf Security Cloud Knobs
+include_jsc_demo_config         = false
+include_jsc_dp_only             = false
+include_jsc_mtd_only            = false
+include_jsc_all_services        = false
+include_jsc_base                = false
+include_jsc_ztna                = false
+include_jsc_network_relay       = false
+include_jsc_block_pages         = false
+include_jsc_mtd_dp_only         = false
+include_jsc_ztna_dp_only        = false
+include_jsc_ztna_mtd_only       = false
+
+## Misc Knobs
+include_sandbox                 = false
+include_onboarder_wizard        = false
 
 ```
 
