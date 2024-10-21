@@ -38,7 +38,7 @@ provider "jsc" {
 
 ## Initialize Protect (for macOS) module
 
-module "jamf_jamf_protect_trial_kickstart" {
+module "jamf_protect_trial_kickstart" {
   count                       = var.include_jamf_protect_trial_kickstart == true ? 1 : 0
   source                      = "./modules/onboarder_modules/jamf_protect_trial_kickstart"
   jamfpro_instance_url        = var.jamfpro_instance_url
