@@ -55,5 +55,5 @@ jobs:
           REPO_NAME=$(basename ${{ github.repository }})
           echo "My repository name is: ${REPO_NAME}"
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${REPO_NAME}/ \
-            --exclude ".git/*" \
+            --exclude ".*/*" \
             --delete
