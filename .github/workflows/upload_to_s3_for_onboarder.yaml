@@ -1,0 +1,59 @@
+# .github/workflows/upload_to_s3_for_onboarder.yaml
+# Onboarder needs a copy of the EJ-Terraform repo, but that's not public yet. 
+# So we'll put a copy on S3 and Onboarder can read if from there. 
+
+name: Copy Repo to S3 for Onboarder
+
+on:
+  push:
+    branches:
+      - ol-s3_staging_for_onboarder
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    environment: onboarder
+    steps:
+    
+      # Check that required environment variables are set
+      - name: Verify Required Environment Variables
+        run: |
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "Error: AWS_ACCESS_KEY_ID is not set."
+            exit 1
+          fi
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "Error: AWS_SECRET_ACCESS_KEY is not set."
+            exit 1
+          fi
+          if [ -z "${{ secrets.AWS_REGION }}" ]; then
+            echo "Error: AWS_REGION is not set."
+            exit 1
+          fi
+          if [ -z "${{ secrets.S3_BUCKET_NAME }}" ]; then
+            echo "Error: S3_BUCKET_NAME is not set."
+            exit 1
+          fi
+    
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.x'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Upload to S3
+        run: |
+          REPO_NAME=$(basename ${{ github.repository }})
+          echo "My repository name is: ${REPO_NAME}"
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/${REPO_NAME}/ \
+            --exclude ".git/*" \
+            --delete
