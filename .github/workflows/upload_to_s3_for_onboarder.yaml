@@ -30,8 +30,8 @@ jobs:
             echo "Error: AWS_REGION is not set."
             exit 1
           fi
-          if [ -z "${{ secrets.S3_BUCKET_NAME }}" ]; then
-            echo "Error: S3_BUCKET_NAME is not set."
+          if [ -z "${{ secrets.AWS_S3_BUCKET_NAME }}" ]; then
+            echo "Error: AWS_S3_BUCKET_NAME is not set."
             exit 1
           fi
     
@@ -54,6 +54,6 @@ jobs:
         run: |
           REPO_NAME=$(basename ${{ github.repository }})
           echo "My repository name is: ${REPO_NAME}"
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/${REPO_NAME}/ \
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${REPO_NAME}/ \
             --exclude ".git/*" \
             --delete
