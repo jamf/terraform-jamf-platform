@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 variable "install_chrome" {
   type    = bool
   default = false

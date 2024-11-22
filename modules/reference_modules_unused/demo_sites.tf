@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 resource "jamfpro_site" "site_production" {
   name = "Production"
 }

@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 ### Define Jamf Protect for macOS integration
 variable "include_jamf_protect_for_macOS" {
   type    = bool

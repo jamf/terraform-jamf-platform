@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform blueprint will build the Aftermath vignette from Experience Jamf.
 It will do the following:

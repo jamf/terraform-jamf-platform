@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 ## Root provider requirements
 terraform {
   required_providers {

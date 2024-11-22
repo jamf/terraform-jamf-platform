@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 ## Define Jamf Pro provider variables (populated by .tfvars file)
 variable "jamfpro_instance_url" {
   description = "Jamf Pro Instance name."

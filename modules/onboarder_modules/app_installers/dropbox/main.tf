@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 ## Call Terraform provider
 terraform {
   required_providers {

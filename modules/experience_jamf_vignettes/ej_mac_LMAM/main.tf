@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform blueprint will build the Local macOS Accoiunt Management (LMAM) vignette as exists in Experience Jamf.
 

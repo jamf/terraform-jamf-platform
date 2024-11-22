@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform module will install any required prerequisites for Experience Jamf vignettes.
 In main.tf will do the following:

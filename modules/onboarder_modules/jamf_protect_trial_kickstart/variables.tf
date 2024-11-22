@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 variable "jamfpro_instance_url" {
   description = "Jamf Pro URL name."
   type        = string

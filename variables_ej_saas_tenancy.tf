@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 variable "KeyName" {
   type        = string
   sensitive   = false

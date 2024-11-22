@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform blueprint will build the SaaS Tenancy Control vignette from Experience Jamf.
 To do  -

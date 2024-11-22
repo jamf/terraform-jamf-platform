@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform blueprint will build the Experience Jamf base config.
 It will do the following:

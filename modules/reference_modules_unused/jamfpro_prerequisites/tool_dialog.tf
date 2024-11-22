@@ -1,3 +1,4 @@
+# Copyright 2024, Jamf
 /*
 This terraform blueprint will install the Dialog tool as part of its prerequisites.
 It will do the following:
