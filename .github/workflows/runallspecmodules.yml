@@ -67,6 +67,8 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -var "jsc_api_id=${{ secrets.jsc_api_id }}" \
+                          -var "jsc_api_secret=${{ secrets.jsc_api_secret }}" \
                           -parallelism=1 \
             || exit_code=$?  # Capture the exit code
             # Check if the exit code is present
@@ -81,6 +83,8 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -var "jsc_api_id=${{ secrets.jsc_api_id }}" \
+                          -var "jsc_api_secret=${{ secrets.jsc_api_secret }}" \
                           -parallelism=1 \
                           -refresh=false \
             || exit_code_destroy=$?  # Capture the exit code
@@ -93,6 +97,8 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -var "jsc_api_id=${{ secrets.jsc_api_id }}" \
+                          -var "jsc_api_secret=${{ secrets.jsc_api_secret }}" \
                           -parallelism=1 \
                           -refresh=false
             fi
