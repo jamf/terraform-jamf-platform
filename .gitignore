@@ -8,3 +8,6 @@ catalog-info.yaml
 plan.json
 plan.out
 *.terraformrc
+
+# omit anything created by opening the project in a JetBrains IDE
+.idea

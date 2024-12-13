@@ -1,6 +1,10 @@
 # .github/workflows/upload_to_s3_for_onboarder.yaml
-# Onboarder needs a copy of the EJ-Terraform repo, but that's not public yet. 
-# So we'll put a copy on S3 and Onboarder can read if from there. 
+# Onboarder needs a copy of the EJ-Terraform repo, but that's not public yet.
+# So we'll put a copy on S3 and Onboarder can read if from there.
+
+# Any time there's a push, this action will copy the files to an s3 directory named as follows:
+# /<REPO_NAME>/<BRANCH_NAME>/<VERSION>/
+# e.g., "/ExperienceJamf-terraform/main/20241212134500"
 
 name: Copy Repo to S3 for Onboarder
 
@@ -8,6 +12,8 @@ on:
   push:
     branches:
       - ol-s3_staging_for_onboarder
+      - main
+      - staging
 
 jobs:
   upload:
@@ -48,8 +54,13 @@ jobs:
       - name: Upload to S3
         run: |
           REPO_NAME=$(basename ${{ github.repository }})
-          echo "My repository name is: ${REPO_NAME}"
-          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${REPO_NAME}/ \
+          BRANCH_NAME=${{ github.ref_name }}
+          VERSION=$(date +%Y%m%d%H%M%S) # Version identifier using timestamp
+          S3_PATH="${REPO_NAME}/${BRANCH_NAME}/${VERSION}/"
+          echo "Uploading to S3 path: ${S3_PATH}"
+          
+          # Perform the S3 sync with the dynamically constructed path
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
             --exclude ".*/*" \
             --exclude ".*" \
             --delete
