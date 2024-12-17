@@ -50,7 +50,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-
+        
       - name: Upload to S3
         run: |
           REPO_NAME=$(basename ${{ github.repository }})
@@ -58,8 +58,21 @@ jobs:
           VERSION=$(date +%Y%m%d%H%M%S) # Version identifier using timestamp
           S3_PATH="${REPO_NAME}/${BRANCH_NAME}/${VERSION}/"
           echo "Uploading to S3 path: ${S3_PATH}"
-          
-          # Perform the S3 sync with the dynamically constructed path
+          # Perform the S3 sync, omitting hidden files and folders
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
+            --exclude ".*/*" \
+            --exclude ".*" \
+            --delete
+
+      - name: Main and Staging Branch Copies
+        # To make it easy for the webapp to locate the current version of main and staging,
+        #  create a second, un-versioned copy of those. 
+        if: github.ref_name == 'main' || github.ref_name == 'staging'
+        run: |
+          echo "Push was to main or staging branch so I'll make a second copy to s3
+          REPO_NAME=$(basename ${{ github.repository }})
+          S3_PATH="${REPO_NAME}/${BRANCH_NAME}/"
+          # Perform the S3 sync, omitting hidden files and folders
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
             --exclude ".*/*" \
             --exclude ".*" \
