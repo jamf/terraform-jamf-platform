@@ -56,7 +56,7 @@ jobs:
           REPO_NAME=$(basename ${{ github.repository }})
           BRANCH_NAME=${{ github.ref_name }}
           VERSION=$(date +%Y%m%d%H%M%S) # Version identifier using timestamp
-          S3_PATH="${REPO_NAME}/${BRANCH_NAME}/${VERSION}/"
+          S3_PATH="versions/${BRANCH_NAME}/${VERSION}/"
           echo "Uploading to S3 path: ${S3_PATH}"
           # Perform the S3 sync, omitting hidden files and folders
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
@@ -70,8 +70,7 @@ jobs:
         if: github.ref_name == 'main' || github.ref_name == 'staging'
         run: |
           echo "Push was to main or staging branch so I'll make a second copy to s3
-          REPO_NAME=$(basename ${{ github.repository }})
-          S3_PATH="${REPO_NAME}/${BRANCH_NAME}/"
+          S3_PATH="${BRANCH_NAME}/"
           # Perform the S3 sync, omitting hidden files and folders
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
             --exclude ".*/*" \
