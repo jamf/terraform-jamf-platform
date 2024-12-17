@@ -62,7 +62,8 @@ jobs:
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
             --exclude ".*/*" \
             --exclude ".*" \
-            --delete
+            --delete \
+            --only-show-errors
 
       - name: Main and Staging Branch Copies
         # To make it easy for the webapp to locate the current version of main and staging,
@@ -75,4 +76,6 @@ jobs:
           aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }}/${S3_PATH} \
             --exclude ".*/*" \
             --exclude ".*" \
-            --delete
+            --delete \
+            --only-show-errors
+ 
