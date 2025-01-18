@@ -17,6 +17,7 @@ on:
 
 jobs:
   upload:
+    name: upload-tf-to-s3
     runs-on: ubuntu-latest
     environment: mirror
     steps:
