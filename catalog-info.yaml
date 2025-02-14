@@ -2,6 +2,8 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: TJE-Terraform
+  annotations:
+    sonarqube.org/project-key: com.jamf.ce.terraform-jamf-platform
 spec:
   type: provisioning
   lifecycle: experimental
