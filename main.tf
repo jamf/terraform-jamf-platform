@@ -1,5 +1,6 @@
 ## Root provider requirements
 terraform {
+  required_version = ">= 1.10.0"
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
