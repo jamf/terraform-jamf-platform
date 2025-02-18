@@ -38,6 +38,12 @@ jamfpro_auth_method   = "oauth2"
 jamfpro_client_id     = ""
 jamfpro_client_secret = ""
 
+## API Debug Mode
+#   (Optional) Defaults to False if omitted. If true, 
+#   output from SDKs will be included in the Terraform 
+#   output. 
+# enable_client_sdk_logs = True
+
 
 ## Jamf Security Cloud (RADAR) Account Details
 jsc_username          = ""
