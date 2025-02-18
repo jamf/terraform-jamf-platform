@@ -37,6 +37,12 @@ variable "jamfpro_password" {
   default     = ""
 }
 
+variable "enable_client_sdk_logs" {
+  description = "Enable client SDK logs"
+  type        = bool
+  default     = false
+}
+
 
 ## Define JSC provider variables (populated by .tfvars file)
 variable "jsc_username" {

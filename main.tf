@@ -20,7 +20,7 @@ provider "jamfpro" {
   basic_auth_password                  = var.jamfpro_password
   client_id                            = var.jamfpro_client_id
   client_secret                        = var.jamfpro_client_secret
-  enable_client_sdk_logs               = false
+  enable_client_sdk_logs               = var.enable_client_sdk_logs
   hide_sensitive_data                  = true # Hides sensititve data in logs
   token_refresh_buffer_period_seconds  = 5    # minutes
   jamfpro_load_balancer_lock           = true
