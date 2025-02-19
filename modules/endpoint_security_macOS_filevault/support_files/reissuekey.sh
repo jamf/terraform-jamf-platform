@@ -77,26 +77,24 @@ selfServiceBrandIcon="/Users/$3/Library/Application Support/com.jamfsoftware.sel
 jamfBrandIcon="/Library/Application Support/JAMF/Jamf.app/Contents/Resources/AppIcon.icns"
 fileVaultIcon="/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/FileVaultIcon.icns"
 
-if [ ! -z "$4" ]
-then
-orgName="$4 -"
+if [ -n "$4" ]; then
+  orgName="$4 -"
 fi
 
-if [ ! -z "$6" ]
-then
-haltMsg="$6"
+if [ -n "$6" ]; then
+  haltMsg="$6"
 else
-haltMsg="Please Contact IT for Further assistance."
+  haltMsg="Please Contact IT for Further assistance."
 fi
 
-if [[ ! -z "$7" ]]; then
-brandIcon="$7"
+if [[ -n "$7" ]]; then
+  brandIcon="$7"
 elif [[ -f $selfServiceBrandIcon ]]; then
   brandIcon=$selfServiceBrandIcon
 elif [[ -f $jamfBrandIcon ]]; then
   brandIcon=$jamfBrandIcon
 else
-brandIcon=$fileVaultIcon
+  brandIcon=$fileVaultIcon
 fi
 
 
@@ -104,35 +102,34 @@ fi
 userName=$(/usr/bin/stat -f%Su /dev/console)
 
 ## Grab the UUID of the User
-userNameUUID=$(dscl . -read /Users/$userName/ GeneratedUID | awk '{print $2}')
+userNameUUID=$(dscl . -read "/Users/${userName}/" GeneratedUID | awk '{print $2}')
 
 ## Get the OS build
-BUILD=`/usr/bin/sw_vers -buildVersion | awk {'print substr ($0,0,2)'}`
+BUILD=$(/usr/bin/sw_vers -buildVersion | cut -c 1-2)
 
 ## This first user check sees if the logged in account is already authorized with FileVault 2
-userCheck=`fdesetup list | awk -v usrN="$userNameUUID" -F, 'match($0, usrN) {print $1}'`
+userCheck=$(fdesetup list | awk -v usrN="$userNameUUID" -F, 'match("$0", usrN) {print "$1"}')
 if [ "${userCheck}" != "${userName}" ]; then
-echo "This user is not a FileVault 2 enabled user."
-exit 3
+  echo "This user is not a FileVault 2 enabled user."
+  exit 3
 fi
 
 ## Counter for Attempts
 try=0
-if [ ! -z "$5" ]
-then
-maxTry=$5
+if [ -n "$5" ]; then
+  maxTry=$5
 else
-maxTry=2
+  maxTry=2
 fi
 
 ## Check to see if the encryption process is complete
-encryptCheck=`fdesetup status`
+encryptCheck=$(fdesetup status)
 statusCheck=$(echo "${encryptCheck}" | grep "FileVault is On.")
 expectedStatus="FileVault is On."
 if [ "${statusCheck}" != "${expectedStatus}" ]; then
-echo "The encryption process has not completed."
-echo "${encryptCheck}"
-exit 4
+  echo "The encryption process has not completed."
+  echo "${encryptCheck}"
+  exit 4
 fi
 
 passwordPrompt () {
@@ -144,10 +141,9 @@ display dialog \"To generate a new FileVault key\" & return & \"Enter login pass
 set userPass to text returned of the result
 return userPass
 end run")
-if [ "$?" == "1" ]
-then
-echo "User Canceled"
-exit 0
+if [ "$?" == "1" ]; then
+  echo "User Canceled"
+  exit 0
 fi
 try=$((try+1))
 if [[ $BUILD -ge 13 ]] &&  [[ $BUILD -lt 17 ]]; then
@@ -175,9 +171,9 @@ log_user 1
 expect eof
 ")
 else
-echo "OS version not 10.9+ or OS version unrecognized"
-echo "$(/usr/bin/sw_vers -productVersion)"
-exit 5
+  echo "OS version not 10.9+ or OS version unrecognized"
+  /usr/bin/sw_vers -productVersion
+  exit 5
 fi
 }
 
@@ -189,17 +185,16 @@ end run"
 }
 
 errorAlert () {
- /usr/bin/osascript -e "
+  /usr/bin/osascript -e "
 on run
 display dialog \"FileVault Key not Changed\" & return & \"$result\" buttons {\"Cancel\", \"Try Again\"} default button 2 with title \"$orgName FileVault Key Reset\" with icon POSIX file \"$brandIcon\"
 end run"
- if [ "$?" == "1" ]
-  then
-echo "User Canceled"
-exit 0
-else
-try=$(($try+1))
-fi
+  if [ "$?" == "1" ]; then
+    echo "User Canceled"
+    exit 0
+  else
+    ((try++))
+  fi
 }
 
 haltAlert () {
@@ -216,13 +211,13 @@ passwordPrompt
 if [[ $result = *"Error"* ]]
 then
 echo "Error Changing Key"
-if [ $try -ge $maxTry ]
+if [ "${try}" -ge "${maxTry}" ]
 then
 haltAlert
 echo "Quitting.. Too Many failures"
 exit 0
 else
-echo $result
+echo "${result}"
 errorAlert
 fi
 else
