@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Download latest specified Crowdstrike pkg and install
 # richard@richard-purves.com - 05/03/2022
@@ -11,7 +11,6 @@ then
 	# Client ID, Client Secret for the API token. Then make a base64 version.
 	clientid="$4"
 	secret="$5"
-	b64creds=$( printf "$clientid:$secret" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
 
 	# Set a default URL
 	baseurl="https://api.crowdstrike.com"
@@ -63,19 +62,19 @@ then
 	for loop in {1..10};
 	do
 		echo "Download attempt: [$loop / 10]"
-		test=$( /usr/bin/curl -s -o /private/tmp/${sensorname} -H "Authorization: Bearer ${bearer}" -w "%{http_code}" "${sensordl}?id=${sensorsha}" )
+		test=$( /usr/bin/curl -s -o "/private/tmp/${sensorname}" -H "Authorization: Bearer ${bearer}" -w "%{http_code}" "${sensordl}?id=${sensorsha}" )
 		[ "$test" = "200" ] && break
 	done
 
 	# Invalidate access to the bearer token
-	/usr/bin/curl -X POST "$oauthrevoke" -H "accept: application/json" -H "authorization: Basic ${b64creds}" -H "Content-Type: application/x-www-form-urlencoded" -d "token=${bearer}"
+	/usr/bin/curl --user "$clientid:$secret" -X POST "$oauthrevoke" -H "accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "token=${bearer}"
 
 	# Did the download actually work. Error if not.
 	[ "$test" != "200" ] && { echo "Download failed. Exiting."; exit 1; }
 
 	# Finally install and clean up
-	/usr/sbin/installer -target / -pkg /private/tmp/${sensorname}
-	/bin/rm /private/tmp/${sensorname}
+	/usr/sbin/installer -target / -pkg "/private/tmp/${sensorname}"
+	/bin/rm "/private/tmp/${sensorname}"
 else
 	echo "Crowdstrike already present."
 fi
