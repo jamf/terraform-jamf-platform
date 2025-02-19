@@ -1,0 +1,45 @@
+name: Sync Project to a Public Repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # No commit history
+
+      - name: Remove excluded files
+        run: |
+          if [ -f .syncignore ]; then
+            while IFS= read -r pattern; do
+              # Ignore empty lines and comments
+              [[ -z "$pattern" || "$pattern" == \#* ]] && continue
+              
+              # Expand wildcards using find and rm
+              find . -path "./$pattern" -exec rm -rf {} +
+            done < .syncignore
+
+            # Now remove .syncignore itself
+            rm -f .syncignore
+          fi
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Push to Target Repo
+        run: |
+          rm -rf .git  # Remove Git history
+          git init
+          git add .
+          git commit -m "Project Sync"
+          git branch -M main
+          git remote add origin https://x-access-token:${{ secrets.TARGET_REPO_PAT }}@github.com/jamf-concepts/terraform-jamf-platform.git
+          git push --force origin main

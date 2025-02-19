@@ -1,0 +1,34 @@
+# These files are in gitignore so they shouldn't even be in the repo, but just in case...
+
+# Terraform work files
+*.tfstate
+*.tfstate.backup
+.terraform*
+terraform.tfvars
+terraform.*.tfvars
+*.terraformrc
+.terraform.lock.hcl
+plan.json
+plan.out
+
+# macOS Finder Prefs
+.DS_Store
+
+# Sonar work files
+.scannerwork
+
+# Jetbrains IDE files
+.idea
+
+
+# These are files that we don't want to copy to a public repo...
+
+# Ignore specific files
+catalog-info.yaml
+CODEOWNERS
+
+# Ignore all `.bak` files in any folder
+**/*.bak
+
+# Example of ignoring entire directories
+# proj-team-docs/
