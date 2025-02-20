@@ -8,6 +8,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    environment: public-mirror
     steps:
       - name: Checkout source repo
         uses: actions/checkout@v4
