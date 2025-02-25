@@ -1,6 +1,4 @@
-# EJ-Terraform
-
-Terraform configuration for the Jamf Platform.
+# Jamf Platfrom Terraform Configurations
 
 Provider versions used in this release:
 
