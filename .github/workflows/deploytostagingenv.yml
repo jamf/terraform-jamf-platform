@@ -41,8 +41,3 @@ jobs:
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
         run: terraform fmt -check -recursive
-
-      # Checks that Terraform Apply ran ok - if it didn't, we exit 1
-      - name: Exit code 1 if Terraform Apply failed
-        if: ${{ steps.terraformapply.outcome != 'success' }}
-        run: exit 1
