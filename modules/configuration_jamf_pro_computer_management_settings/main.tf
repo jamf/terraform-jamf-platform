@@ -55,13 +55,13 @@ resource "jamfpro_computer_inventory_collection" "example" {
 }
 
 ##Computer Check-in Settings
-resource "jamfpro_client_checkin" "jamfpro_client_checkin" {
-  check_in_frequency    = 15
-  create_startup_script = true
-  //log_startup_event                  = true
-  //ensure_ssh_is_enabled              = false
-  //check_for_policies_at_startup      = true
-  //create_login_logout_hooks          = true
-  //log_username                       = true
-  //check_for_policies_at_login_logout = true
+resource "jamfpro_computer_checkin" "jamfpro_computer_checkin" {
+  check_in_frequency                 = 15
+  create_startup_script              = true
+  log_startup_event                  = true
+  ensure_ssh_is_enabled              = false
+  check_for_policies_at_startup      = true
+  create_login_logout_hooks          = true
+  log_username                       = true
+  check_for_policies_at_login_logout = true
 }
